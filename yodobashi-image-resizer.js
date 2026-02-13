@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Yodobashi Image Resizer (Amazon Style)
 // @namespace    http://tampermonkey.net/
-// @version      1.2
-// @description  ヨドバシカメラの商品一覧画像をAmazonスタイルのサイズに調整して見やすくする（画像拡大・テキスト省略）
-// @author       zzznu
+// @version      1.3
+// @description  ヨドバシカメラの商品一覧画像をAmazonスタイルのサイズに拡大して見やすくする
+// @author       You
 // @match        https://www.yodobashi.com/*
 // @grant        none
 // @run-at       document-idle
@@ -19,14 +19,6 @@
             maxWidth: '200px',
             maxHeight: '200px',
             objectFit: 'contain'
-        },
-        // 商品カードの最小高さ
-        cardMinHeight: '420px',
-        // テキスト設定
-        text: {
-            productNameLines: 2,  // 商品名は2行まで
-            descriptionLines: 2,  // 説明文は2行まで
-            lineHeight: '1.4em'
         }
     };
 
@@ -72,34 +64,6 @@
         textContainers.forEach(container => {
             Object.assign(container.style, {
                 marginTop: '8px'
-            });
-        });
-
-        // 商品名のテキスト省略（2行まで）
-        const productNames = document.querySelectorAll('.pName, .pListBlock .pName a');
-        productNames.forEach(name => {
-            Object.assign(name.style, {
-                display: '-webkit-box',
-                WebkitLineClamp: AMAZON_STYLE_CONFIG.text.productNameLines.toString(),
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                lineHeight: AMAZON_STYLE_CONFIG.text.lineHeight,
-                maxHeight: `calc(${AMAZON_STYLE_CONFIG.text.lineHeight} * ${AMAZON_STYLE_CONFIG.text.productNameLines})`
-            });
-        });
-
-        // 説明文のテキスト省略（2行まで）
-        const descriptions = document.querySelectorAll('.pSpec, .pCatch, .productSpec');
-        descriptions.forEach(desc => {
-            Object.assign(desc.style, {
-                display: '-webkit-box',
-                WebkitLineClamp: AMAZON_STYLE_CONFIG.text.descriptionLines.toString(),
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                lineHeight: AMAZON_STYLE_CONFIG.text.lineHeight,
-                maxHeight: `calc(${AMAZON_STYLE_CONFIG.text.lineHeight} * ${AMAZON_STYLE_CONFIG.text.descriptionLines})`
             });
         });
     }
