@@ -7,3 +7,5 @@
 
 ## ライセンス
 MIT License
+
+大体全部、Claudeが作った
